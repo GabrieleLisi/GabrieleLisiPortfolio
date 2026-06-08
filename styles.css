@@ -133,14 +133,6 @@ em{
   opacity:.9;
 }
 
-.hero-render::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(8,7,6,.65),rgba(8,7,6,.15));
-  z-index:2;
-}
-
 .hero-content{
   position:relative;
   z-index:3;
