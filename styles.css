@@ -113,6 +113,8 @@ em{
   margin-top:22px;
 }
 
+/* HERO */
+
 .hero{
   position:relative;
   display:grid;
@@ -187,6 +189,8 @@ em{
   text-shadow:0 2px 12px rgba(0,0,0,.45);
 }
 
+/* IMAGES */
+
 .render-frame{
   position:relative;
   overflow:hidden;
@@ -208,6 +212,8 @@ em{
 .render-frame:hover img{
   transform:scale(1.025);
 }
+
+/* RENDER ARCHIVE */
 
 .archive{
   min-height:auto;
@@ -231,7 +237,6 @@ em{
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .5s ease;
 }
 
 .masonry .render-frame:nth-child(1){
@@ -269,6 +274,8 @@ em{
   grid-column:2;
   height:620px;
 }
+
+/* PRODUCTS */
 
 .products{
   min-height:auto;
@@ -321,6 +328,8 @@ em{
   margin:0;
 }
 
+/* ABOUT */
+
 .about{
   min-height:auto;
   border-top:1px solid var(--line);
@@ -346,15 +355,23 @@ em{
   color:white;
 }
 
+/* SERVICES */
+
+.services{
+  min-height:auto;
+  padding-bottom:20px;
+}
+
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   border:1px solid var(--line);
+  margin-bottom:0;
 }
 
 .cards div{
-  min-height:250px;
-  padding:32px;
+  min-height:170px;
+  padding:28px;
   border-right:1px solid var(--line);
 }
 
@@ -371,7 +388,7 @@ em{
 .cards h3{
   font-size:26px;
   line-height:1.1;
-  margin-top:60px;
+  margin-top:45px;
 }
 
 .cards p{
@@ -379,38 +396,49 @@ em{
   line-height:1.5;
 }
 
+/* CONTACT */
+
 .contact{
   min-height:auto;
+  padding-top:30px;
 }
 
 .contact-info{
-  max-width:920px;
-  margin-top:60px;
+  max-width:1000px;
+  margin-top:50px;
 }
 
 .contact-text{
   font-size:clamp(19px,1.5vw,25px);
   line-height:1.7;
   color:#c8c0b8;
-  margin:0 0 30px;
+  margin:0 0 28px;
 }
 
 .contact-mail{
   display:inline-block;
-  margin-top:24px;
+  margin-top:45px;
+  padding:26px 34px;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(32px,5vw,82px);
-  line-height:.95;
+  font-size:clamp(34px,4vw,72px);
+  font-weight:400;
+  line-height:1;
   color:var(--accent);
   text-decoration:none;
-  letter-spacing:-.04em;
-  transition:opacity .3s ease, transform .3s ease;
+  letter-spacing:-.03em;
+  border:1px solid rgba(215,190,160,.32);
+  background:rgba(215,190,160,.07);
+  border-radius:10px;
+  transition:all .3s ease;
 }
 
 .contact-mail:hover{
-  opacity:.75;
+  background:rgba(215,190,160,.14);
+  border-color:rgba(215,190,160,.65);
   transform:translateY(-4px);
 }
+
+/* FOOTER */
 
 .footer{
   padding:56px clamp(20px,4vw,72px);
@@ -426,6 +454,8 @@ em{
   font-size:34px;
   font-weight:400;
 }
+
+/* LIGHTBOX */
 
 .lightbox{
   position:fixed !important;
@@ -465,6 +495,8 @@ em{
   cursor:pointer !important;
   line-height:1 !important;
 }
+
+/* RESPONSIVE */
 
 @media(max-width:1000px){
   .product-grid{
@@ -532,7 +564,8 @@ em{
   }
 
   .contact-mail{
-    font-size:34px;
+    font-size:32px;
+    padding:20px;
     word-break:break-word;
   }
 }
