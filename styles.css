@@ -19,8 +19,6 @@ body{
   overflow-x:hidden;
 }
 
-/* GRAIN */
-
 .grain{
   pointer-events:none;
   position:fixed;
@@ -30,8 +28,6 @@ body{
   background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px);
   background-size:100% 4px;
 }
-
-/* NAV */
 
 .nav{
   position:fixed;
@@ -67,8 +63,6 @@ body{
   letter-spacing:.25em;
   text-shadow:0 2px 12px rgba(0,0,0,.35);
 }
-
-/* GENERAL */
 
 .section{
   min-height:100svh;
@@ -119,8 +113,6 @@ em{
   margin-top:22px;
 }
 
-/* HERO */
-
 .hero{
   position:relative;
   display:grid;
@@ -142,8 +134,6 @@ em{
   object-position:center;
   display:block;
 }
-
-/* Nessun overlay sulla hero */
 
 .hero-render::after{
   display:none;
@@ -197,8 +187,6 @@ em{
   text-shadow:0 2px 12px rgba(0,0,0,.45);
 }
 
-/* IMAGE BASE */
-
 .render-frame{
   position:relative;
   overflow:hidden;
@@ -220,8 +208,6 @@ em{
 .render-frame:hover img{
   transform:scale(1.025);
 }
-
-/* RENDER ARCHIVE DELUXE */
 
 .archive{
   min-height:auto;
@@ -247,8 +233,6 @@ em{
   display:block;
   transition:transform .5s ease;
 }
-
-/* layout zig-zag */
 
 .masonry .render-frame:nth-child(1){
   grid-column:1;
@@ -285,8 +269,6 @@ em{
   grid-column:2;
   height:620px;
 }
-
-/* PRODUCTS */
 
 .products{
   min-height:auto;
@@ -339,8 +321,6 @@ em{
   margin:0;
 }
 
-/* ABOUT */
-
 .about{
   min-height:auto;
   border-top:1px solid var(--line);
@@ -365,8 +345,6 @@ em{
 .about-grid strong{
   color:white;
 }
-
-/* SERVICES */
 
 .cards{
   display:grid;
@@ -401,44 +379,38 @@ em{
   line-height:1.5;
 }
 
-/* CONTACT */
-
 .contact{
   min-height:auto;
 }
 
-form{
-  display:grid;
-  gap:26px;
-  max-width:900px;
+.contact-info{
+  max-width:920px;
   margin-top:60px;
 }
 
-label{
-  display:grid;
-  gap:12px;
-  color:var(--muted);
-  font-size:12px;
-  letter-spacing:.25em;
-  text-transform:uppercase;
+.contact-text{
+  font-size:clamp(19px,1.5vw,25px);
+  line-height:1.7;
+  color:#c8c0b8;
+  margin:0 0 30px;
 }
 
-input,textarea{
-  background:transparent;
-  border:0;
-  border-bottom:1px solid var(--line);
-  color:var(--text);
-  font-size:20px;
-  padding:16px 0;
-  outline:none;
+.contact-mail{
+  display:inline-block;
+  margin-top:24px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(32px,5vw,82px);
+  line-height:.95;
+  color:var(--accent);
+  text-decoration:none;
+  letter-spacing:-.04em;
+  transition:opacity .3s ease, transform .3s ease;
 }
 
-textarea{
-  min-height:160px;
-  resize:vertical;
+.contact-mail:hover{
+  opacity:.75;
+  transform:translateY(-4px);
 }
-
-/* FOOTER */
 
 .footer{
   padding:56px clamp(20px,4vw,72px);
@@ -454,8 +426,6 @@ textarea{
   font-size:34px;
   font-weight:400;
 }
-
-/* LIGHTBOX */
 
 .lightbox{
   position:fixed !important;
@@ -495,8 +465,6 @@ textarea{
   cursor:pointer !important;
   line-height:1 !important;
 }
-
-/* RESPONSIVE */
 
 @media(max-width:1000px){
   .product-grid{
@@ -561,5 +529,10 @@ textarea{
   .cards div{
     border-right:0;
     border-bottom:1px solid var(--line);
+  }
+
+  .contact-mail{
+    font-size:34px;
+    word-break:break-word;
   }
 }
