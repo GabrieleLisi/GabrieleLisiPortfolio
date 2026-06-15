@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Gabriele Lisi — Architectural Visualization & 3D Rendering</title>
+
   <meta name="description" content="Portfolio di Gabriele Lisi, Freelance 3D Artist specializzato in Architectural Visualization, Interior Rendering e Product Visualization." />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+
   <div class="grain"></div>
 
   <header class="nav">
     <a href="#home" class="brand">Gabriele Lisi.</a>
 
     <nav>
+      <a href="#profile">Profile</a>
       <a href="#archive">Render</a>
       <a href="#products">Products</a>
-      <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -25,7 +29,8 @@
 
   <main>
 
-    <section id="home" class="hero section">
+    <!-- HERO -->
+    <section id="home" class="section hero">
       <div class="render-frame hero-render">
         <img src="assets/renders/Interior_1.png" alt="Architectural visualization hero render">
       </div>
@@ -52,8 +57,140 @@
       <div class="scroll-indicator">Scroll</div>
     </section>
 
+    <!-- PROFILE -->
+    <section id="profile" class="section profile">
+
+      <aside class="profile-side">
+        <div>
+          <p class="eyebrow">Location</p>
+          <p>Florence, Italy</p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Email</p>
+          <p>
+            <a href="mailto:gabrielelisijob@outlook.it">gabrielelisijob@outlook.it</a>
+          </p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Languages</p>
+          <p>Italian — Native</p>
+          <p>English — Intermediate</p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Availability</p>
+          <p>Freelance collaborations</p>
+          <p>Architectural visualization, interiors, product and real-time environments.</p>
+        </div>
+      </aside>
+
+      <div class="profile-main">
+
+        <div class="section-label">
+          <span></span>
+          <p>Profile</p>
+          <span></span>
+        </div>
+
+        <h2>
+          Designer & 3D Artist focused on
+          <em>visual spaces</em>.
+        </h2>
+
+        <p class="profile-text">
+          I am a Designer and 3D Artist with a background in Industrial Design and Computer Graphics.
+          I work on 3D modeling, rendering, virtual environments and visual content for architecture,
+          retail, product visualization and immersive experiences.
+        </p>
+
+        <div class="tool-tags">
+          <span>Blender</span>
+          <span>Twinmotion</span>
+          <span>Unreal Engine</span>
+          <span>Unity</span>
+          <span>Substance Painter</span>
+          <span>Photoshop</span>
+          <span>AutoCAD</span>
+          <span>Rhinoceros</span>
+          <span>ZBrush</span>
+          <span>Maya</span>
+        </div>
+
+        <div class="profile-card">
+          <p class="eyebrow">Education</p>
+
+          <h3>Industrial Design Degree</h3>
+          <p>University of Florence</p>
+
+          <h3>Master in Computer Graphics</h3>
+          <p>BigRock Institute of Magic Technologies</p>
+        </div>
+
+        <div class="profile-card">
+          <p class="eyebrow">Experience</p>
+
+          <h3>Teacher / 3D Artist</h3>
+          <p>Istituto Associazione Franchi — 2024 / 2025</p>
+          <ul class="experience-list">
+            <li>Teaching support in 3D modeling and rendering workflows.</li>
+            <li>Individual and group tutoring for 3D projects.</li>
+            <li>Guidance in asset creation, environments and professional pipelines.</li>
+            <li>Preparation of portfolios and project presentations.</li>
+          </ul>
+
+          <h3>3D Modeler & Virtual Spaces Developer</h3>
+          <p>Advepa — 2025</p>
+          <ul class="experience-list">
+            <li>Creation of virtual spaces and interactive real-time environments.</li>
+            <li>Architectural and retail 3D modeling.</li>
+            <li>Optimization for immersive and web-based experiences.</li>
+            <li>Integration of PBR materials, animations and interactive content.</li>
+          </ul>
+
+          <h3>3D Modeler</h3>
+          <p>Retail Italia S.R.L. — 2022 / 2025</p>
+          <ul class="experience-list">
+            <li>Design and visualization of retail interiors and virtual stores.</li>
+            <li>Creation of realistic and explorable environments.</li>
+            <li>Use of photorealistic lighting and materials.</li>
+            <li>Development of digital assets and interactive experiences.</li>
+          </ul>
+
+          <h3>3D Modeler</h3>
+          <p>Heta Lab s.r.l. — 2019 / 2022</p>
+          <ul class="experience-list">
+            <li>Optimization of 3D assets for performance and usability.</li>
+            <li>Creation of customizable models and product variations.</li>
+            <li>Development of visual assets for fashion and retail presentation.</li>
+          </ul>
+        </div>
+
+        <div class="numbers">
+          <div>
+            <strong>10+</strong>
+            <span>Software & Tools</span>
+          </div>
+
+          <div>
+            <strong>4</strong>
+            <span>Professional Experiences</span>
+          </div>
+
+          <div>
+            <strong>3D</strong>
+            <span>Modeling • Rendering • Real-Time</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RENDER ARCHIVE -->
     <section id="archive" class="section archive">
       <p class="eyebrow">02 / Architectural Visualization</p>
+
       <h2>Render <em>archive</em>.</h2>
 
       <div class="masonry">
@@ -67,60 +204,99 @@
       </div>
     </section>
 
+    <!-- PRODUCTS -->
     <section id="products" class="section products">
       <p class="eyebrow">03 / Product Visualization</p>
+
       <h2>Product <em>design</em>.</h2>
 
       <div class="product-grid">
-        <div class="product-card"><img src="assets/renders/Prodotti/Atollo_Black.png" alt="Atollo"><h3>Atollo</h3><p>Lighting product visualization.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/AURA One_Blue.png" alt="AURA One"><h3>AURA One</h3><p>Contemporary product render.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Bellhope_Blue.png" alt="Bellhope"><h3>Bellhope</h3><p>Design object visualization.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Cato_Blue.png" alt="Cato"><h3>Cato</h3><p>Product rendering for presentation.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Cream.png" alt="Cream"><h3>Cream</h3><p>Minimal product visualization.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Mobiletto.png" alt="Mobiletto"><h3>Mobiletto</h3><p>Furniture visualization.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Mobilino1.png" alt="Mobilino"><h3>Mobilino</h3><p>Compact furniture render.</p></div>
-        <div class="product-card"><img src="assets/renders/Prodotti/Sveglia_Arancione.png" alt="Sveglia"><h3>Sveglia</h3><p>Retro product rendering.</p></div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Atollo_Black.png" alt="Atollo">
+          <h3>Atollo</h3>
+          <p>Lighting product visualization.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/AURA One_Blue.png" alt="AURA One">
+          <h3>AURA One</h3>
+          <p>Contemporary product render.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Bellhope_Blue.png" alt="Bellhope">
+          <h3>Bellhope</h3>
+          <p>Design object visualization.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Cato_Blue.png" alt="Cato">
+          <h3>Cato</h3>
+          <p>Product rendering for presentation.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Cream.png" alt="Cream">
+          <h3>Cream</h3>
+          <p>Minimal product visualization.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Mobiletto.png" alt="Mobiletto">
+          <h3>Mobiletto</h3>
+          <p>Furniture visualization.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Mobilino1.png" alt="Mobilino">
+          <h3>Mobilino</h3>
+          <p>Compact furniture render.</p>
+        </div>
+
+        <div class="product-card">
+          <img src="assets/renders/Prodotti/Sveglia_Arancione.png" alt="Sveglia">
+          <h3>Sveglia</h3>
+          <p>Retro product rendering.</p>
+        </div>
+
       </div>
     </section>
 
-    <section id="about" class="section about">
-      <h2>
-        Creating photorealistic imagery for
-        <em>architecture</em>, interiors and
-        product design.
-      </h2>
-
-      <div class="about-grid">
-        <div>
-          <p class="eyebrow">Education</p>
-          <p><strong>Industrial Design Degree</strong><br>University of Florence</p>
-          <p><strong>Master in Computer Graphics</strong><br>BigRock Institute of Magic Technologies</p>
-        </div>
-
-        <div>
-          <p class="eyebrow">Software</p>
-          <p>Blender<br>Twinmotion<br>Unreal Engine<br>Substance Painter<br>Photoshop</p>
-        </div>
-
-        <div>
-          <p class="eyebrow">Services</p>
-          <p>Architectural Visualization<br>Interior Rendering<br>Product Visualization<br>Digital Environments</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- SERVICES -->
     <section id="services" class="section services">
       <p class="eyebrow">04 / Services</p>
+
       <h2>What I <em>offer</em>.</h2>
 
       <div class="cards">
-        <div><span>01</span><h3>Architectural Visualization</h3><p>Photorealistic renders for residential, commercial and architectural projects.</p></div>
-        <div><span>02</span><h3>Interior Rendering</h3><p>Atmospheric interior images focused on light, materials and spatial perception.</p></div>
-        <div><span>03</span><h3>Product Visualization</h3><p>High-quality 3D images for furniture, products, design objects and branded visual content.</p></div>
-        <div><span>04</span><h3>Digital Environments</h3><p>Visual scenes and environments for design, communication and immersive presentations.</p></div>
+        <div>
+          <span>01</span>
+          <h3>Architectural Visualization</h3>
+          <p>Photorealistic renders for residential, commercial and architectural projects.</p>
+        </div>
+
+        <div>
+          <span>02</span>
+          <h3>Interior Rendering</h3>
+          <p>Atmospheric interior images focused on light, materials and spatial perception.</p>
+        </div>
+
+        <div>
+          <span>03</span>
+          <h3>Product Visualization</h3>
+          <p>High-quality 3D images for furniture, products, design objects and branded visual content.</p>
+        </div>
+
+        <div>
+          <span>04</span>
+          <h3>Digital Environments</h3>
+          <p>Visual scenes and environments for design, communication and immersive presentations.</p>
+        </div>
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="section contact">
       <p class="eyebrow">05 / Contact</p>
 
@@ -143,9 +319,9 @@
 
         <p class="eyebrow">Direct Email</p>
 
-<a href="mailto:gabrielelisijob@outlook.it" class="contact-mail">
-    gabrielelisijob@outlook.it
-</a>
+        <a href="mailto:gabrielelisijob@outlook.it" class="contact-mail">
+          gabrielelisijob@outlook.it
+        </a>
       </div>
     </section>
 
@@ -163,5 +339,6 @@
   </div>
 
   <script src="script.js"></script>
+
 </body>
 </html>
