@@ -1,50 +1,43 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   initLightbox();
   initDotField();
   initChromaGrid();
-  initSplitTextAnimation();
+  initSplitText();
+  initClickSpark();
 });
 
 /* LIGHTBOX */
 
 function initLightbox() {
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const closeBtn = document.querySelector(".lightbox-close");
+  const box = document.getElementById("lightbox");
+  const imgBox = document.getElementById("lightbox-img");
+  const close = document.querySelector(".lightbox-close");
 
-  if (!lightbox || !lightboxImg || !closeBtn) return;
+  if (!box || !imgBox || !close) return;
 
-  const images = document.querySelectorAll(".masonry img, .render-frame img, .product-card img");
+  document.querySelectorAll(".masonry img, .render-frame img, .product-card img").forEach(img => {
+    img.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
 
-  images.forEach(function (img) {
-    img.addEventListener("click", function (event) {
-      event.preventDefault();
-      event.stopPropagation();
+      imgBox.src = img.currentSrc || img.src;
+      imgBox.alt = img.alt || "Preview image";
 
-      lightboxImg.src = img.currentSrc || img.src;
-      lightboxImg.alt = img.alt || "Preview image";
-
-      lightbox.classList.add("active");
+      box.classList.add("active");
       document.body.style.overflow = "hidden";
     });
   });
 
-  function closeLightbox() {
-    lightbox.classList.remove("active");
-    lightboxImg.src = "";
+  const closeBox = () => {
+    box.classList.remove("active");
+    imgBox.src = "";
     document.body.style.overflow = "";
-  }
+  };
 
-  closeBtn.addEventListener("click", closeLightbox);
-  lightbox.addEventListener("click", closeLightbox);
-
-  lightboxImg.addEventListener("click", function (event) {
-    event.stopPropagation();
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeLightbox();
-  });
+  close.addEventListener("click", closeBox);
+  box.addEventListener("click", closeBox);
+  imgBox.addEventListener("click", e => e.stopPropagation());
+  document.addEventListener("keydown", e => e.key === "Escape" && closeBox());
 }
 
 /* DOT FIELD */
@@ -55,116 +48,83 @@ function initDotField() {
 
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-
   container.appendChild(canvas);
 
-  const settings = {
-    dotRadius: 1.5,
-    dotSpacing: 14,
-    cursorRadius: 350,
-    bulgeStrength: 58,
-    colorStart: "rgba(255,255,255,0.70)",
-    colorEnd: "rgba(255,255,255,0.38)"
+  const cfg = {
+    radius: 1.5,
+    spacing: 14,
+    mouseRadius: 350,
+    strength: 58,
+    colorA: "rgba(255,255,255,.70)",
+    colorB: "rgba(255,255,255,.38)"
   };
 
+  let w = 0;
+  let h = 0;
   let dots = [];
-  let width = 0;
-  let height = 0;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  const mouse = {
-    x: -9999,
-    y: -9999,
-    prevX: -9999,
-    prevY: -9999,
-    speed: 0
-  };
-
   let engagement = 0;
 
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const mouse = { x: -9999, y: -9999, px: -9999, py: -9999, speed: 0 };
+
   function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
+    w = window.innerWidth;
+    h = window.innerHeight;
 
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    buildDots();
-  }
-
-  function buildDots() {
     dots = [];
+    const step = cfg.radius + cfg.spacing;
 
-    const step = settings.dotRadius + settings.dotSpacing;
-    const cols = Math.floor(width / step);
-    const rows = Math.floor(height / step);
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const x = col * step + step / 2;
-        const y = row * step + step / 2;
-
-        dots.push({
-          ax: x,
-          ay: y,
-          sx: x,
-          sy: y
-        });
+    for (let y = step / 2; y < h; y += step) {
+      for (let x = step / 2; x < w; x += step) {
+        dots.push({ ax: x, ay: y, sx: x, sy: y });
       }
     }
   }
 
-  function updateMouse(event) {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
-  }
-
-  function updateSpeed() {
-    const dx = mouse.prevX - mouse.x;
-    const dy = mouse.prevY - mouse.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    mouse.speed += (dist - mouse.speed) * 0.5;
-
-    if (mouse.speed < 0.001) mouse.speed = 0;
-
-    mouse.prevX = mouse.x;
-    mouse.prevY = mouse.y;
+  function updateMouse(e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
   }
 
   function animate() {
-    updateSpeed();
+    const dx = mouse.px - mouse.x;
+    const dy = mouse.py - mouse.y;
 
-    const targetEngagement = Math.min(mouse.speed / 5, 1);
-    engagement += (targetEngagement - engagement) * 0.06;
+    mouse.speed += (Math.hypot(dx, dy) - mouse.speed) * 0.5;
+    mouse.px = mouse.x;
+    mouse.py = mouse.y;
 
-    ctx.clearRect(0, 0, width, height);
+    engagement += (Math.min(mouse.speed / 5, 1) - engagement) * 0.06;
 
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, settings.colorStart);
-    gradient.addColorStop(1, settings.colorEnd);
+    ctx.clearRect(0, 0, w, h);
+
+    const gradient = ctx.createLinearGradient(0, 0, w, h);
+    gradient.addColorStop(0, cfg.colorA);
+    gradient.addColorStop(1, cfg.colorB);
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
 
-    const cursorRadiusSq = settings.cursorRadius * settings.cursorRadius;
-    const radius = settings.dotRadius / 2;
+    const radiusSq = cfg.mouseRadius * cfg.mouseRadius;
+    const dotRadius = cfg.radius / 2;
 
-    dots.forEach(function (dot) {
-      const dx = mouse.x - dot.ax;
-      const dy = mouse.y - dot.ay;
-      const distSq = dx * dx + dy * dy;
+    dots.forEach(dot => {
+      const mx = mouse.x - dot.ax;
+      const my = mouse.y - dot.ay;
+      const distSq = mx * mx + my * my;
 
-      if (distSq < cursorRadiusSq && engagement > 0.01) {
+      if (distSq < radiusSq && engagement > 0.01) {
         const dist = Math.sqrt(distSq);
-        const t = 1 - dist / settings.cursorRadius;
-        const push = t * t * settings.bulgeStrength * engagement;
-        const angle = Math.atan2(dy, dx);
+        const t = 1 - dist / cfg.mouseRadius;
+        const push = t * t * cfg.strength * engagement;
+        const angle = Math.atan2(my, mx);
 
         dot.sx += (dot.ax - Math.cos(angle) * push - dot.sx) * 0.15;
         dot.sy += (dot.ay - Math.sin(angle) * push - dot.sy) * 0.15;
@@ -173,8 +133,8 @@ function initDotField() {
         dot.sy += (dot.ay - dot.sy) * 0.1;
       }
 
-      ctx.moveTo(dot.sx + radius, dot.sy);
-      ctx.arc(dot.sx, dot.sy, radius, 0, Math.PI * 2);
+      ctx.moveTo(dot.sx + dotRadius, dot.sy);
+      ctx.arc(dot.sx, dot.sy, dotRadius, 0, Math.PI * 2);
     });
 
     ctx.fill();
@@ -194,108 +154,208 @@ function initChromaGrid() {
   const grid = document.getElementById("chromaProducts");
   if (!grid) return;
 
-  let currentX = grid.offsetWidth / 2;
-  let currentY = grid.offsetHeight / 2;
-  let targetX = currentX;
-  let targetY = currentY;
+  let x = grid.offsetWidth / 2;
+  let y = grid.offsetHeight / 2;
+  let targetX = x;
+  let targetY = y;
 
   function animate() {
-    currentX += (targetX - currentX) * 0.12;
-    currentY += (targetY - currentY) * 0.12;
+    x += (targetX - x) * 0.12;
+    y += (targetY - y) * 0.12;
 
-    grid.style.setProperty("--x", currentX + "px");
-    grid.style.setProperty("--y", currentY + "px");
+    grid.style.setProperty("--x", x + "px");
+    grid.style.setProperty("--y", y + "px");
 
     requestAnimationFrame(animate);
   }
 
-  grid.addEventListener("pointermove", function (event) {
+  grid.addEventListener("pointermove", e => {
     const rect = grid.getBoundingClientRect();
 
-    targetX = event.clientX - rect.left;
-    targetY = event.clientY - rect.top;
+    targetX = e.clientX - rect.left;
+    targetY = e.clientY - rect.top;
 
     grid.classList.add("is-active");
   });
 
-  grid.addEventListener("pointerleave", function () {
+  grid.addEventListener("pointerleave", () => {
     grid.classList.remove("is-active");
   });
 
-  const cards = grid.querySelectorAll(".product-card");
-
-  cards.forEach(function (card) {
-    card.addEventListener("mousemove", function (event) {
+  grid.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("mousemove", e => {
       const rect = card.getBoundingClientRect();
 
-      card.style.setProperty("--mouse-x", event.clientX - rect.left + "px");
-      card.style.setProperty("--mouse-y", event.clientY - rect.top + "px");
+      card.style.setProperty("--mouse-x", e.clientX - rect.left + "px");
+      card.style.setProperty("--mouse-y", e.clientY - rect.top + "px");
     });
   });
 
   animate();
 }
 
-/* SPLIT TEXT SCROLL ANIMATION */
+/* SPLIT TEXT */
 
-function initSplitTextAnimation() {
-  const elements = document.querySelectorAll("h1, h2, .profile-text, .contact-text");
+function initSplitText() {
+  const selectors = `
+    h1,h2,h3,
+    .brand,
+    .nav nav a,
+    .eyebrow,
+    .intro,
+    .profile-text,
+    .contact-text,
+    .profile-side p,
+    .profile-side a,
+    .profile-card p,
+    .experience-list li,
+    .tool-tags span,
+    .numbers strong,
+    .numbers span,
+    .product-card h3,
+    .product-card p,
+    .cards h3,
+    .cards p,
+    .footer strong,
+    .footer span,
+    .footer small,
+    .contact-mail
+  `;
 
-  elements.forEach(function (element) {
-    if (element.dataset.split === "true") return;
+  document.querySelectorAll(selectors).forEach(el => {
+    if (el.dataset.split) return;
 
-    const originalHTML = element.innerHTML;
-    element.innerHTML = "";
+    const text = el.textContent.trim();
+    if (!text) return;
 
-    const temp = document.createElement("div");
-    temp.innerHTML = originalHTML;
+    el.innerHTML = "";
 
-    const text = temp.textContent.trim();
-    const words = text.split(" ");
-
-    words.forEach(function (word, wordIndex) {
+    text.split(" ").forEach((word, index, words) => {
       const wordSpan = document.createElement("span");
       wordSpan.className = "split-word";
 
-      word.split("").forEach(function (char) {
+      [...word].forEach(letter => {
         const charSpan = document.createElement("span");
         charSpan.className = "split-char";
-        charSpan.textContent = char;
+        charSpan.textContent = letter;
         wordSpan.appendChild(charSpan);
       });
 
-      element.appendChild(wordSpan);
+      el.appendChild(wordSpan);
 
-      if (wordIndex < words.length - 1) {
-        element.appendChild(document.createTextNode(" "));
+      if (index < words.length - 1) {
+        el.appendChild(document.createTextNode(" "));
       }
     });
 
-    element.dataset.split = "true";
+    el.dataset.split = "true";
   });
 
-  const observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          const chars = entry.target.querySelectorAll(".split-char");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const chars = entry.target.querySelectorAll(".split-char");
 
-          chars.forEach(function (char, index) {
-            char.style.transitionDelay = index * 18 + "ms";
-          });
+      if (entry.isIntersecting) {
+        chars.forEach((char, index) => {
+          char.style.transitionDelay = index * 10 + "ms";
+        });
 
-          entry.target.classList.add("split-visible");
-          observer.unobserve(entry.target);
-        }
+        entry.target.classList.add("split-visible");
+      } else {
+        chars.forEach(char => {
+          char.style.transitionDelay = "0ms";
+        });
+
+        entry.target.classList.remove("split-visible");
+      }
+    });
+  }, {
+    threshold: 0.18,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
+  document.querySelectorAll("[data-split='true']").forEach(el => observer.observe(el));
+}
+
+/* CLICK SPARK */
+
+function initClickSpark() {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.className = "click-spark-canvas";
+  document.body.appendChild(canvas);
+
+  const cfg = {
+    color: "#ffffff",
+    size: 10,
+    radius: 18,
+    count: 8,
+    duration: 420,
+    scale: 1.2
+  };
+
+  const sparks = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function easeOut(t) {
+    return t * (2 - t);
+  }
+
+  function createSpark(e) {
+    const now = performance.now();
+
+    for (let i = 0; i < cfg.count; i++) {
+      sparks.push({
+        x: e.clientX,
+        y: e.clientY,
+        angle: Math.PI * 2 * i / cfg.count,
+        time: now
       });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: "0px 0px -80px 0px"
     }
-  );
+  }
 
-  document.querySelectorAll("[data-split='true']").forEach(function (element) {
-    observer.observe(element);
-  });
+  function draw(now) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const spark = sparks[i];
+      const elapsed = now - spark.time;
+
+      if (elapsed > cfg.duration) {
+        sparks.splice(i, 1);
+        continue;
+      }
+
+      const progress = easeOut(elapsed / cfg.duration);
+      const distance = progress * cfg.radius * cfg.scale;
+      const length = cfg.size * (1 - progress);
+
+      const x1 = spark.x + distance * Math.cos(spark.angle);
+      const y1 = spark.y + distance * Math.sin(spark.angle);
+      const x2 = spark.x + (distance + length) * Math.cos(spark.angle);
+      const y2 = spark.y + (distance + length) * Math.sin(spark.angle);
+
+      ctx.strokeStyle = cfg.color;
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  requestAnimationFrame(draw);
+
+  window.addEventListener("resize", resize);
+  document.addEventListener("click", createSpark);
 }
