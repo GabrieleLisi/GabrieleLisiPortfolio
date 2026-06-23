@@ -65,7 +65,13 @@ function initDotField() {
   let engagement = 0;
 
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const mouse = { x: -9999, y: -9999, px: -9999, py: -9999, speed: 0 };
+  const mouse = {
+    x: -9999,
+    y: -9999,
+    px: -9999,
+    py: -9999,
+    speed: 0
+  };
 
   function resize() {
     w = window.innerWidth;
@@ -198,20 +204,16 @@ function initChromaGrid() {
 
 function initSplitText() {
   const selectors = `
-    h1,h2,h3,
-    .brand,
-    .nav nav a,
+    h1,h2,
     .eyebrow,
     .intro,
     .profile-text,
     .contact-text,
     .profile-side p,
     .profile-side a,
+    .profile-card h3,
     .profile-card p,
     .experience-list li,
-    .tool-tags span,
-    .numbers strong,
-    .numbers span,
     .product-card h3,
     .product-card p,
     .cards h3,
@@ -257,7 +259,7 @@ function initSplitText() {
 
       if (entry.isIntersecting) {
         chars.forEach((char, index) => {
-          char.style.transitionDelay = index * 10 + "ms";
+          char.style.transitionDelay = index * 8 + "ms";
         });
 
         entry.target.classList.add("split-visible");
@@ -274,7 +276,9 @@ function initSplitText() {
     rootMargin: "0px 0px -40px 0px"
   });
 
-  document.querySelectorAll("[data-split='true']").forEach(el => observer.observe(el));
+  document.querySelectorAll("[data-split='true']").forEach(el => {
+    observer.observe(el);
+  });
 }
 
 /* CLICK SPARK */
